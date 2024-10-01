@@ -14,7 +14,9 @@ set (TARGET_HEADERS
 	${HEADER_PATH}/soloud_biquadresonantfilter.h
 	${HEADER_PATH}/soloud_bus.h
 	${HEADER_PATH}/soloud_dcremovalfilter.h
+	${HEADER_PATH}/soloud_duckfilter.h
 	${HEADER_PATH}/soloud_echofilter.h
+	${HEADER_PATH}/soloud_eqfilter.h
 	${HEADER_PATH}/soloud_error.h
 	${HEADER_PATH}/soloud_fader.h
 	${HEADER_PATH}/soloud_fft.h
@@ -226,6 +228,20 @@ if (SOLOUD_BACKEND_XAUDIO2)
 	)
 endif()
 
+if (SOLOUD_BACKEND_MINIAUDIO)
+	add_definitions (-DWITH_MINIAUDIO)
+
+	set (TARGET_HEADERS
+		${TARGET_HEADERS}
+		${BACKENDS_PATH}/miniaudio/miniaudio.h
+	)
+
+	set (BACKENDS_SOURCES
+		${BACKENDS_SOURCES}
+		${BACKENDS_PATH}/miniaudio/soloud_miniaudio.cpp
+	)
+endif()
+
 if (SOLOUD_BACKEND_WINMM)
 	add_definitions (-DWITH_WINMM)
 
@@ -250,13 +266,13 @@ set (FILTERS_SOURCES
 	${FILTERS_PATH}/soloud_bassboostfilter.cpp
 	${FILTERS_PATH}/soloud_biquadresonantfilter.cpp
 	${FILTERS_PATH}/soloud_dcremovalfilter.cpp
+	${FILTERS_PATH}/soloud_duckfilter.cpp
 	${FILTERS_PATH}/soloud_echofilter.cpp
+	${FILTERS_PATH}/soloud_eqfilter.cpp
 	${FILTERS_PATH}/soloud_fftfilter.cpp
 	${FILTERS_PATH}/soloud_flangerfilter.cpp
 	${FILTERS_PATH}/soloud_freeverbfilter.cpp
 	${FILTERS_PATH}/soloud_lofifilter.cpp
-	${FILTERS_PATH}/soloud_robotizefilter.cpp
-	${FILTERS_PATH}/soloud_waveshaperfilter.cpp
 )
 
 
